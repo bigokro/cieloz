@@ -27,6 +27,9 @@ class Cieloz::RequisicaoTransacao < Cieloz::Requisicao
   validate :parcela_minima?,
     if: "not @dados_pedido.nil? and not @forma_pagamento.nil?"
 
+  validate :nao_capturar?,
+    if: "not @dados_pedido.nil? and not @dados_pedido.dados_avs.nil?"
+
   validates :autorizar, inclusion: {
     in: [
       SOMENTE_AUTENTICAR, AUTORIZAR_SE_AUTENTICADA,
@@ -84,6 +87,10 @@ class Cieloz::RequisicaoTransacao < Cieloz::Requisicao
     if parcelas > 0 and valor / parcelas < 500
       @dados_pedido.add_error :valor, :minimum_installment_not_satisfied
     end
+  end
+
+  def nao_capturar?
+    @dados_pedido.add_error :dados_avs, :no_capture_with_avs if @capturar == 'true'
   end
 
   def somente_autenticar

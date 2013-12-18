@@ -246,6 +246,30 @@ describe Cieloz::RequisicaoTransacao::FormaPagamento do
   end
 end
 
+describe Cieloz::RequisicaoTransacao::DadosAvs do
+  it { must_validate_presence_of :cep }
+
+  it 'validates format of cep' do
+    subject.cep = '12345-123'
+    assert subject.valid?
+
+    subject.cep = '12345123'
+    refute subject.valid?
+    assert_equal [I18n.t('errors.messages.invalid')], subject.errors[:cep]
+
+    subject.cep = '12345-abc'
+    refute subject.valid?
+    assert_equal [I18n.t('errors.messages.invalid')], subject.errors[:cep]
+  end
+
+  it "is validated inside RequisicaoTransacao" do
+    pedido = Cieloz::RequisicaoTransacao::DadosPedido.new dados_avs: subject
+    txn = Cieloz::RequisicaoTransacao.new dados_pedido: pedido
+    refute txn.valid?
+    refute txn.errors[:dados_pedido].first.messages[:dados_avs].empty?
+  end
+end
+
 describe Cieloz::RequisicaoTransacao do
   let(:_) { subject.class }
 

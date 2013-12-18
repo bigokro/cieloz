@@ -1,0 +1,20 @@
+<dados-pedido>
+  <numero><%= pedido.numero %></numero>
+  <valor><%= pedido.valor %></valor>
+  <moeda><%= pedido.moeda %></moeda>
+  <data-hora><%= pedido.attributes[:data_hora] %></data-hora>
+  <descricao><%= pedido.descricao %></descricao>
+  <idioma><%= pedido.idioma %></idioma>
+  <soft-descriptor><%= pedido.soft_descriptor %></soft-descriptor>
+  <avs>
+    <![CDATA[
+      <dados-avs>
+        <cep><%= avs.cep %></cep>
+        <endereco><%= avs.endereco %></endereco>
+        <complemento><%= avs.complemento %></complemento>
+        <numero><%= avs.numero %></numero>
+        <bairro><%= avs.bairro %></bairro>
+      </dados-avs>
+    ]]>
+  </avs>
+</dados-pedido>
