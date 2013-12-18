@@ -37,8 +37,7 @@ describe Cieloz::RequisicaoTransacao do
   end
 
   it "serializes dados-avs" do
-    pedido.dados_avs = avs
-    subject.dados_pedido = pedido
+    subject.dados_avs = avs
     assert_equal expected_xml(opts) { xml_for :avs, dir, binding }, subject.to_xml
   end
 
@@ -51,11 +50,10 @@ describe Cieloz::RequisicaoTransacao do
   end
 
   it "doesn't permit automatic capture with AVS" do
-    pedido.dados_avs = avs
-    subject.dados_pedido = pedido
+    subject.dados_avs = avs
     subject.capturar_automaticamente
     assert !subject.valid?
-    assert_equal 'Automatic capture is not permitted with AVS', subject.dados_pedido.errors[:dados_avs].first
+    assert_equal 'Automatic capture is not permitted with AVS', subject.errors[:dados_avs].first
   end
 
   describe "request posting" do

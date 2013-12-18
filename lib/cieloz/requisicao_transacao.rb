@@ -5,8 +5,8 @@ class Cieloz::RequisicaoTransacao < Cieloz::Requisicao
   AUTORIZACAO_DIRETA        = 3
   RECORRENTE                = 4
 
-  hattr_writer  :dados_portador, :dados_pedido, :forma_pagamento
-  attr_reader   :dados_portador, :dados_pedido, :forma_pagamento
+  hattr_writer  :dados_portador, :dados_pedido, :forma_pagamento, :dados_avs
+  attr_reader   :dados_portador, :dados_pedido, :forma_pagamento, :dados_avs
   attr_reader   :autorizar, :capturar
   attr_accessor :campo_livre, :url_retorno
 
@@ -28,7 +28,7 @@ class Cieloz::RequisicaoTransacao < Cieloz::Requisicao
     if: "not @dados_pedido.nil? and not @forma_pagamento.nil?"
 
   validate :nao_capturar?,
-    if: "not @dados_pedido.nil? and not @dados_pedido.dados_avs.nil?"
+    if: "not @dados_avs.nil?"
 
   validates :autorizar, inclusion: {
     in: [
@@ -47,14 +47,14 @@ class Cieloz::RequisicaoTransacao < Cieloz::Requisicao
   validates :campo_livre, length: { maximum: 128 }
 
   def self.map(source, opts={})
-    portador, pedido, pagamento, url, capturar, campo_livre =
+    portador, pedido, pagamento, avs, url, capturar, campo_livre =
       attrs_from source, opts, :dados_portador, :dados_pedido,
-      :forma_pagamento, :url_retorno, :capturar, :campo_livre
+      :forma_pagamento, :dados_avs, :url_retorno, :capturar, :campo_livre
 
     url ||= Cieloz::Configuracao.url_retorno
 
     txn = new source: source, opts: opts, dados_portador: portador,
-      dados_pedido: pedido, forma_pagamento: pagamento,
+      dados_pedido: pedido, forma_pagamento: pagamento, dados_avs: avs,
       campo_livre: campo_livre, url_retorno: url,
       dados_ec: Cieloz::Configuracao.credenciais
 
@@ -71,7 +71,7 @@ class Cieloz::RequisicaoTransacao < Cieloz::Requisicao
   end
 
   def nested_validations
-    nested_attrs = [ :dados_ec, :dados_pedido, :forma_pagamento ]
+    nested_attrs = [ :dados_ec, :dados_pedido, :forma_pagamento, :dados_avs ]
     nested_attrs << :dados_portador if Cieloz::Configuracao.store_mode?
 
     nested_attrs.each { |attr|
@@ -90,7 +90,7 @@ class Cieloz::RequisicaoTransacao < Cieloz::Requisicao
   end
 
   def nao_capturar?
-    @dados_pedido.add_error :dados_avs, :no_capture_with_avs if @capturar == 'true'
+    add_error :dados_avs, :no_capture_with_avs if @capturar == 'true'
   end
 
   def somente_autenticar
@@ -154,7 +154,8 @@ class Cieloz::RequisicaoTransacao < Cieloz::Requisicao
       autorizar:        @autorizar,
       capturar:         @capturar,
       campo_livre:      @campo_livre,
-      bin:              (@dados_portador.numero.to_s[0..5] unless @dados_portador.nil?)
+      bin:              (@dados_portador.numero.to_s[0..5] unless @dados_portador.nil?),
+      dados_avs:        @dados_avs
     }
   end
 

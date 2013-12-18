@@ -263,10 +263,9 @@ describe Cieloz::RequisicaoTransacao::DadosAvs do
   end
 
   it "is validated inside RequisicaoTransacao" do
-    pedido = Cieloz::RequisicaoTransacao::DadosPedido.new dados_avs: subject
-    txn = Cieloz::RequisicaoTransacao.new dados_pedido: pedido
+    txn = Cieloz::RequisicaoTransacao.new dados_avs: subject
     refute txn.valid?
-    refute txn.errors[:dados_pedido].first.messages[:dados_avs].empty?
+    refute txn.errors[:dados_avs].empty?
   end
 end
 

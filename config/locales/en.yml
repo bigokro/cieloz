@@ -10,6 +10,8 @@ en:
               direct_auth_available_for_credit_only: Direct auth available for credit only
             capturar:
               inclusion: should be true or false
+            dados_avs:
+              no_capture_with_avs: Automatic capture is not permitted with AVS
         cieloz/requisicao_transacao/dados_portador:
           attributes:
             numero:
@@ -24,8 +26,6 @@ en:
               inclusion: should be PT (Portuguese), EN (English) or ES (Spanish)
             valor:
               minimum_installment_not_satisfied: Installment should be greater than or equal to R$ 5,00
-            dados_avs:
-              no_capture_with_avs: Automatic capture is not permitted with AVS
         cieloz/requisicao_transacao/forma_pagamento:
           attributes:
             bandeira:

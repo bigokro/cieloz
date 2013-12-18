@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<requisicao-transacao id="a97ab62a-7956-41ea-b03f-c2e9f612c293" versao="1.2.1">
+ [OMITIDO]
+  <dados-pedido> 
+    <numero>178148599</numero>
+    <valor>10000</valor>
+    <moeda>986</moeda> 
+    <data-hora>2011-12-07T11:43:37</data-hora> 
+    <descricao>[origem:10.50.54.156]</descricao> 
+    <idioma>PT</idioma> 
+    <soft-descriptor>softdescriptor</soft-descriptor> 
+    <taxa-embarque>1000</taxa-embarque>
+    <avs>
+      <![CDATA[ 
+        <dados-avs>
+          <endereco>Rua Teste AVS</endereco> 
+          <complemento>Casa</complemento> 
+          <numero>123</numero>
+          <bairro>Vila AVS</bairro> 
+          <cep>12345-123</cep>
+        </dados-avs>
+      ]]>
+    </avs>
+  </dados-pedido> 
+  [OMITIDO]
+</requisicao-transacao>
