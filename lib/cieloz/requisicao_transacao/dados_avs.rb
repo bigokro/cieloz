@@ -22,11 +22,11 @@ class Cieloz::RequisicaoTransacao
 
     def attributes
       {
-        cep:         @cep,
         endereco:    @endereco,
         complemento: @complemento,
         numero:      @numero,
-        bairro:      @bairro
+        bairro:      @bairro,
+        cep:         @cep
       }
     end
 

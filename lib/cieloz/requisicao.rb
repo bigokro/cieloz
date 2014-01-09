@@ -39,7 +39,7 @@ class Cieloz::Requisicao
 
     if valid?
       @id     = SecureRandom.uuid if id.blank?
-      @versao = "1.2.0"           if versao.blank?
+      @versao = "1.2.1"           if versao.blank?
 
       http = Net::HTTP.new Cieloz::Configuracao.host, 443
       http.use_ssl = true
