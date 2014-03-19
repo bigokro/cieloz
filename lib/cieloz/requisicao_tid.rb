@@ -45,7 +45,7 @@ module Cieloz
     module ClassMethods
       def map source, opts={}
         numero_pedido = attrs_from source, opts, :numero_pedido
-        new source: source, opts: opts, tid: tid
+        new source: source, opts: opts, numero_pedido: numero_pedido
       end
     end
 
@@ -62,7 +62,7 @@ module Cieloz
 
   class RequisicaoConsulta < RequisicaoTid ; end
   class RequisicaoAutorizacaoTid < RequisicaoTid ; end
-  class RequisicaoConsultaPedido < RequisicaoNumeroPedido ; end
+  class RequisicaoConsultaChsec < RequisicaoNumeroPedido ; end
 
   class RequisicaoCaptura < RequisicaoTidValor ; end
   class RequisicaoCancelamento < RequisicaoTidValor ; end

@@ -30,7 +30,7 @@ module Cieloz
 
     def consulta source, opts={}
       if opts.include? :numero_pedido
-        RequisicaoConsultaPedido.map source, opts
+        RequisicaoConsultaChsec.map source, opts
       else
         RequisicaoConsulta.map source, opts
       end
