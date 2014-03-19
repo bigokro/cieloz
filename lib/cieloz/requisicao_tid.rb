@@ -41,8 +41,28 @@ module Cieloz
     end
   end
 
+  class RequisicaoNumeroPedido < Requisicao
+    module ClassMethods
+      def map source, opts={}
+        numero_pedido = attrs_from source, opts, :numero_pedido
+        new source: source, opts: opts, tid: tid
+      end
+    end
+
+    def self.inherited(target)
+      target.extend ClassMethods
+    end
+
+    attr_accessor :numero_pedido
+
+    def attributes
+      { numero_pedido: @numero_pedido, dados_ec: @dados_ec }
+    end
+  end
+
   class RequisicaoConsulta < RequisicaoTid ; end
   class RequisicaoAutorizacaoTid < RequisicaoTid ; end
+  class RequisicaoConsultaPedido < RequisicaoNumeroPedido ; end
 
   class RequisicaoCaptura < RequisicaoTidValor ; end
   class RequisicaoCancelamento < RequisicaoTidValor ; end

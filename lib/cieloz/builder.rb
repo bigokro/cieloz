@@ -29,7 +29,11 @@ module Cieloz
     end
 
     def consulta source, opts={}
-      RequisicaoConsulta.map source, opts
+      if opts.include? :numero_pedido
+        RequisicaoConsultaPedido.map source, opts
+      else
+        RequisicaoConsulta.map source, opts
+      end
     end
 
     def captura source, opts={}
